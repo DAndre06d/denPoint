@@ -1,5 +1,5 @@
 import { Box, Button, Spinner } from '@chakra-ui/react';
-import InputField from '../forms/InputField';
+import InputField from '../Forms/InputField';
 import useInput from '../../hooks/useInput';
 import PropTypes from 'prop-types';
 
