@@ -3,7 +3,6 @@ import CenteredLinks from "./CenteredLinks";
 import Drawer from "./Drawer";
 import Logo from "../Logo";
 import { Link, useLocation } from "react-router-dom";
-import AvatarWithName from "../AvatarwithName";
 import MenuAvatar from "./menuAvatar/menuAvatar";
 
 const Navbar = () => {
