@@ -114,9 +114,10 @@ The application relies on environment variables defined in a `.env` file. Essent
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-Navigate to the project directory:
+
+    ```bash
+    git clone <repository-url>
+    ```
 
 2. **Navigate to the project directory:**
 
@@ -183,31 +184,31 @@ Navigate to the project directory:
 
 ### Installation and Running
 
-2. **Clone the repository:**
+1. **Clone the repository:**
 
     ```bash
     git clone <repository-url>
     ```
 
-3. **Navigate to the project directory:**
+2. **Navigate to the project directory:**
 
     ```bash
     cd <project-directory>
     ```
 
-4. **Install dependencies:**
+3. **Install dependencies:**
 
     ```bash
     npm install
     ```
 
-5. **Start the development server:**
+4. **Start the development server:**
 
     ```bash
     npm run dev
     ```
 
-6. **Navigate to `http://localhost:3000` in your browser to view the application.**
+5. **Navigate to `http://localhost:3000` in your browser to view the application.**
 
 ### Build for Production
 
@@ -215,5 +216,11 @@ To build for production:
 
 ```bash
 npm run build
+
+### Here is the Required video(uploaded in google drive):
+https://drive.google.com/file/d/1cVMMM2fYWXv0KWHo3c7Y84KatrlhS_oX/view?usp=sharing
+
+### Link for the deployed frontend (note this is still not connected to a server):
+https://den-point.vercel.app/
 
 
