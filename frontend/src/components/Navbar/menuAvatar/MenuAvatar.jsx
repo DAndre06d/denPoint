@@ -6,12 +6,12 @@ import {
     Button,
     useToast
 } from '@chakra-ui/react';
-import AvatarWithName from '../../AvatarwithName';
+import AvatarWithName from '../../AvatarwithName.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { logout } from '../../../slices/authSlice'; // Adjust the import path as needed
+import { logout } from '../../../slices/authSlice.js';
 import { useNavigate } from 'react-router-dom';
-import ChangePassModal from './changePassModal';
+import ChangePassModal from './changePassModal.jsx';
 
 const MenuAvatar = () => {
     const { name } = useSelector((state) => state.auth);

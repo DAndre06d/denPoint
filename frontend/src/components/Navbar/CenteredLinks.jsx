@@ -1,5 +1,5 @@
 import { Box, Link } from '@chakra-ui/react';
-import Links from './Links';
+import Links from './Links.jsx';
 import { useSelector } from 'react-redux';
 
 function CenteredLinks() {

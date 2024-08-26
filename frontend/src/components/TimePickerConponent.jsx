@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, VStack, Spinner } from '@chakra-ui/react';
-import { TIMESLOTS } from '../utils/constants';
+import { TIMESLOTS } from '../utils/constants.js';
 import axios from 'axios';
-import { formatDateForDB } from '../utils/textUtils';
+import { formatDateForDB } from '../utils/textUtils.js';
 
 const TimeSlotSelector = ({ denId, selectedDate, onChange }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -69,7 +69,8 @@ const TimeSlotSelector = ({ denId, selectedDate, onChange }) => {
 
 TimeSlotSelector.propTypes = {
   denId: PropTypes.string.isRequired,
-  selectedDate: PropTypes.instanceOf(Date).isRequired
+  selectedDate: PropTypes.instanceOf(Date).isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default TimeSlotSelector;

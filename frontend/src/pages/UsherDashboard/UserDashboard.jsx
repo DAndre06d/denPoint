@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/footer/Footer"
-import CardComponent from "../../components/CardComponent";
-import Pagination from "../../components/Pagination"; // Import the Pagination component
+import Navbar from "../../components/Navbar/Navbar.jsx";
+import Footer from "../../components/footer/Footer.jsxr"
+import CardComponent from "../../components/CardComponent.jsx";
+import Pagination from "../../components/Pagination.jsx"; // Import the Pagination component
 import { Box, Text, Grid, useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-import { titleCase } from "../../utils/textUtils";
+import { titleCase } from "../../utils/textUtils.js";
 import axios from "axios";
-import { SERVICES } from "../../utils/constants";
+import { SERVICES } from "../../utils/constants.js";
 
 const serviceMap = SERVICES.reduce((acc, service) => {
   acc[service.value] = service.name;

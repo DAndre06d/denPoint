@@ -1,6 +1,6 @@
 import { Box, Button, Spinner } from '@chakra-ui/react';
-import InputField from '../Forms/InputField';
-import useInput from '../../hooks/useInput';
+import InputField from '../Forms/InputField.jsx';
+import useInput from '../../hooks/useInput.js';
 import PropTypes from 'prop-types';
 
 const SignUpForm = ({ onSubmit, isLoading }) => {

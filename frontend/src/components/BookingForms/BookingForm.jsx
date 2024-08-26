@@ -1,12 +1,12 @@
 import { Box, Button, Text, Select, Input, Spinner, useToast } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-import DatePickerComponent from '../DatePickerComponent';
-import { SERVICES } from '../../utils/constants';
-import TimePickerComponent from '../TimePickerConponent';
+import DatePickerComponent from '../DatePickerComponent.jsx';
+import { SERVICES } from '../../utils/constants.js';
+import TimePickerComponent from '../TimePickerConponent.jsx';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { formatDateForDB } from '../../utils/textUtils';
+import { formatDateForDB } from '../../utils/textUtils.js';
 
 const BookingForm = ({ mode, initialDate, initialService, initialDoctor, initialTime, initialConcern,appointId, toggleModal }) => {
     const { userId, } = useSelector((state) => state.auth);

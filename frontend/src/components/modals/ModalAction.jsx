@@ -15,8 +15,8 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import BookingForm from '../BookingForms/BookingForm';
-import { formatDate } from '../../utils/textUtils';
+import BookingForm from '../BookingForms/BookingForm.jsx';
+import { formatDate } from '../../utils/textUtils.js';
 
 const ModalAction = ({ modalState, appointment, mode }) => {
     const toast = useToast();

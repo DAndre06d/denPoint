@@ -3,7 +3,7 @@ import CenteredLinks from "./CenteredLinks";
 import Drawer from "./Drawer";
 import Logo from "../Logo";
 import { Link, useLocation } from "react-router-dom";
-import MenuAvatar from "./menuAvatar/menuAvatar";
+import MenuAvatar from "./menuAvatar/MenuAvatar";
 
 const Navbar = () => {
   // Define a media query for large screens (lg and above)

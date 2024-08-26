@@ -1,9 +1,8 @@
 import { Box,Text } from "@chakra-ui/react"
-import Navbar from "../components/Navbar/Navbar"
-import Hero from "../components/Hero/Hero"
-import ImgCarousel from "../components/imgCarousel/imgCarousel"
-import ImagesWTitle from "../components/ImagesWTitle"
-import Footer from "../components/footer/Footer"
+import Navbar from "../components/Navbar/Navbar.jsx"
+import Hero from "../components/Hero/Hero.jsx"
+import ImgCarousel from "../components/imgCarousel/imgCarousel.jsx"
+import Footer from "../components/footer/Footer.jsx"
 
 
 import Services from "../components/Services/Services"

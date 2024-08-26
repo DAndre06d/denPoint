@@ -1,6 +1,6 @@
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Import carousel styles
-import { getCarouselImages } from '../../utils/getCarouselImg';
+import { getCarouselImages } from '../../utils/getCarouselImg.js';
 import { Box } from '@chakra-ui/react';
 
 const ImgCarousel = () => {

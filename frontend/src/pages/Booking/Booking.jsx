@@ -1,8 +1,8 @@
-import Navbar from "../../components/Navbar/Navbar"
-import Footer from "../../components/footer/Footer"
-import BookingForm from "../../components/BookingForms/BookingForm"
+import Navbar from "../../components/Navbar/Navbar.jsx"
+import Footer from "../../components/footer/Footer.jsx"
+import BookingForm from "../../components/BookingForms/BookingForm.jsx"
 import { Box, Text } from "@chakra-ui/react"
-import Logo from "../../components/Logo"
+import Logo from "../../components/Logo.jsx"
 
 const Booking = () => {
   return (

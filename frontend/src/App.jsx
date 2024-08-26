@@ -1,15 +1,15 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ProtectedRoute from "./utils/ProtectedRoutes";
-import AuthLayout from "./layouts/AuthLayout";
-import SignIn from "./pages/Auth/SignIn";
-import SignUp from "./pages/Auth/SignUp";
-import UserDashboard from "./pages/UsherDashboard/UserDashboard";
-import HomePage from "./pages/Homepage";
-import BookingPage from "./pages/Booking/Booking";
-import Page404 from "./pages/Page404";
-import About from "./pages/About/About";
-import Services from "./pages/Services/Services";
+import ProtectedRoute from "./utils/ProtectedRoutes.jsx";
+import AuthLayout from "./layouts/AuthLayout.jsx";
+import SignIn from "./pages/Auth/SignIn.jsx";
+import SignUp from "./pages/Auth/SignUp.jsx";
+import UserDashboard from "./pages/UsherDashboard/UserDashboard.jsx";
+import HomePage from "./pages/Homepage.jsx";
+import BookingPage from "./pages/Booking/Booking.jsx";
+import Page404 from "./pages/Page404.jsx";
+import About from "./pages/About/About.jsx";
+import Services from "./pages/Services/Services.jsx";
 
 function App() {
   return (

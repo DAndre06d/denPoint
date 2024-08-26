@@ -1,7 +1,7 @@
-import Navbar from "../../components/Navbar/Navbar"
-import Footer from "../../components/footer/Footer"
+import Navbar from "../../components/Navbar/Navba,jsxr"
+import Footer from "../../components/footer/Footer.jsx"
 import { Box, Text } from "@chakra-ui/react"
-import ServicesImages from "./servicesImages"
+import ServicesImages from "./servicesImages.jsx"
 
 const Services = () => {
   return (

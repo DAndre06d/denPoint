@@ -1,6 +1,6 @@
 import { IconButton, Drawer as ChakraDrawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, useDisclosure, Box } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import Links from './Links';
+import Links from './Links.jsx';
 import { useSelector } from 'react-redux';
 
 const Drawer = () => {

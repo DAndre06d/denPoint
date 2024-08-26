@@ -1,8 +1,8 @@
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 import { Box, useMediaQuery } from "@chakra-ui/react";
-import Logo from "../../components/Logo";
-import Description from "./Description";
+import Logo from "../../components/Logo.jsx";
+import Description from "./Description.jsx";
 
 const About = () => {
   const [isSmallerThanMd] = useMediaQuery("(max-width: 48em)");

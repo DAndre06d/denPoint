@@ -1,5 +1,5 @@
 import { Grid, Box } from '@chakra-ui/react';
-import ImagesWTitle from '../../components/ImagesWTitle';
+import ImagesWTitle from '../../components/ImagesWTitle.jsx';
 import generalDentistryImg from '../../assets/images/Icons/General+Dentistry.png';
 import Perio from '../../assets/images/Icons/Periodontics.png';
 import OralSurgery from "../../assets/images/Icons/Oral+Surgery+and+Implant+Dentistry.png";

@@ -1,7 +1,7 @@
 import { Box, Text, useToast, Link } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import Logo from "../../components/Logo";
-import SignUpForm from "../../components/Forms/SignUpForm";
+import Logo from "../../components/Logo.jsx";
+import SignUpForm from "../../components/Forms/SignUpForm.jsx";
 import { useState } from "react";
 import axios from "axios"
 

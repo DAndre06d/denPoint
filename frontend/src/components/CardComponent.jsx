@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardHeader, CardBody, CardFooter, Text, Button, VStack, HStack } from '@chakra-ui/react'; 
-import { formatDate } from '../utils/textUtils';
-import ModalAction from "./modals/ModalAction";
+import { formatDate } from '../utils/textUtils.js';
+import ModalAction from "./modals/ModalAction.jsx";
 
 const CardComponent = ({ appointment,trigger }) => {
   const [modalState, setModalState] = useState({
