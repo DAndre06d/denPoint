@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { logout } from '../../../slices/authSlice.js';
 import { useNavigate } from 'react-router-dom';
-import ChangePassModal from './changePassModal.jsx';
+import ChangePassModal from './ChangePassModal.jsx';
 
 const MenuAvatar = () => {
     const { name } = useSelector((state) => state.auth);
