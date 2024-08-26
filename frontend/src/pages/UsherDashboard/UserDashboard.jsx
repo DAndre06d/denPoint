@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar.jsx";
-import Footer from "../../components/footer/Footer.jsxr"
+import Footer from "../../components/footer/Footer.jsx"
 import CardComponent from "../../components/CardComponent.jsx";
 import Pagination from "../../components/Pagination.jsx"; // Import the Pagination component
 import { Box, Text, Grid, useToast } from "@chakra-ui/react";

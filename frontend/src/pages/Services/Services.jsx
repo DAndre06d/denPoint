@@ -1,4 +1,4 @@
-import Navbar from "../../components/Navbar/Navba,jsxr"
+import Navbar from "../../components/Navbar/Navbar.jsx"
 import Footer from "../../components/footer/Footer.jsx"
 import { Box, Text } from "@chakra-ui/react"
 import ServicesImages from "./servicesImages.jsx"
