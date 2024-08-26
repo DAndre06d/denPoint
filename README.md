@@ -216,11 +216,13 @@ To build for production:
 
 ```bash
 npm run build
+```
 
 ### Here is the Required video(uploaded in google drive):
 https://drive.google.com/file/d/1cVMMM2fYWXv0KWHo3c7Y84KatrlhS_oX/view?usp=sharing
 
 ### Link for the deployed frontend (note this is still not connected to a server):
 https://den-point.vercel.app/
+
 
 
