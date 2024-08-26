@@ -1,4 +1,5 @@
 import { Box, Text,Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -20,7 +21,10 @@ const Hero = () => {
         <Text fontSize={{base:"lg",lg:"3xl"}} fontWeight="bold" fontFamily="Poppins">
           The Center for Implant & General Dentistry is dedicated to offering patients the latest advancements in dental treatments.
         </Text>
-        <Button colorScheme="blue" mt={10}>Book Now</Button>
+        <Link to={"/book"}>
+          <Button colorScheme="blue" mt={10}>Book Now</Button>
+        </Link>
+        
       </Box>
     </Box>
   );
