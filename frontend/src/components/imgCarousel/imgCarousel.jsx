@@ -6,14 +6,31 @@ import { Box } from '@chakra-ui/react';
 const ImgCarousel = () => {
     const images = getCarouselImages();
     return (
-        <Box width={"90%"} display={"flex"} justifyContent={"center"} alignItems={"center"} pl={30}>
-            <Carousel    showThumbs={false} 
-            infiniteLoop 
-            swipeable 
-            useKeyboardArrows >
+        <Box width="100%" display="flex" justifyContent="center" alignItems="center">
+            <Carousel
+            showThumbs={false}
+            showStatus={false}
+            infiniteLoop
+            swipeable
+            emulateTouch
+            useKeyboardArrows
+            autoPlay
+            interval={5000}
+            stopOnHover
+            dynamicHeight={false}
+            >
                 {images.map((src, index) => (
                 <div key={index}>
-                    <img src={src} alt={`Slide ${index + 1}`} style={{height: "250px", width: "300px"}}  />
+                    <img
+                      src={src}
+                      alt={`Slide ${index + 1}`}
+                      style={{
+                        height: "460px",
+                        width: "100%",
+                        objectFit: "cover",
+                        borderRadius: "24px",
+                      }}
+                    />
                 </div>
                 ))}
             </Carousel>

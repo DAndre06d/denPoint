@@ -1,20 +1,27 @@
-import PropTypes from 'prop-types'; // Import PropTypes
-import { Avatar, Text, VStack } from '@chakra-ui/react'; // Import Chakra UI components
+import PropTypes from 'prop-types';
+import { Avatar, Text, VStack } from '@chakra-ui/react';
 
-const defaultAvatar = 'https://static.truckersmp.com/avatarsN/defaultavatar.png'; // Default avatar image URL
+const defaultAvatar = 'https://static.truckersmp.com/avatarsN/defaultavatar.png';
 
 const AvatarWithName = ({ name }) => {
   return (
-    <VStack spacing={2} align="center" display="flex" >
-      <Avatar name={name} src={defaultAvatar} borderColor={"black"} border={"1px"}/>
-      <Text fontWeight="bold">{name}</Text>
+    <VStack spacing={1} align="center" display="flex" maxW="108px">
+      <Avatar
+        name={name}
+        src={defaultAvatar}
+        borderColor="blackAlpha.200"
+        border="1px"
+        size={{ base: "sm", md: "md" }}
+      />
+      <Text fontWeight="700" color="gray.600" fontSize={{ base: "sm", md: "sm" }} noOfLines={1}>
+        {name}
+      </Text>
     </VStack>
   );
 };
 
-// Define prop types for validation
 AvatarWithName.propTypes = {
-  name: PropTypes.string.isRequired, // `name` should be a required string
+  name: PropTypes.string.isRequired,
 };
 
 export default AvatarWithName;

@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux';
 import BookingForm from '../BookingForms/BookingForm.jsx';
 import { formatDate } from '../../utils/textUtils.js';
 
-const ModalAction = ({ modalState, appointment, mode }) => {
+const ModalAction = ({ modalState, appointment, mode, onAppointmentChange }) => {
     const toast = useToast();
     const { userId,} = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
@@ -29,7 +29,6 @@ const ModalAction = ({ modalState, appointment, mode }) => {
               userId: userId,
               appointId: appointment.id
             },{withCredentials: true})
-            console.log(response.data)
             toast({
                 title: "Success",
                 position: "top-right",
@@ -38,6 +37,7 @@ const ModalAction = ({ modalState, appointment, mode }) => {
                 duration: 5000,
                 isClosable: true
             });
+            await onAppointmentChange();
 
         } catch (e) {
             toast({
@@ -69,6 +69,7 @@ const ModalAction = ({ modalState, appointment, mode }) => {
                             initialConcern={appointment.concern}
                             appointId={appointment.id}
                             toggleModal={modalState.toggle}
+                            onSuccess={onAppointmentChange}
                         />
                     ): <Box>
                       <Text as={"b"}>Are you sure you want to cancel this?</Text>
@@ -110,7 +111,8 @@ ModalAction.propTypes = {
         created_at: PropTypes.string.isRequired,
         updated_at: PropTypes.string.isRequired
     }),
-    mode: PropTypes.string.isRequired
+    mode: PropTypes.string.isRequired,
+    onAppointmentChange: PropTypes.func.isRequired
 };
 
 export default ModalAction;

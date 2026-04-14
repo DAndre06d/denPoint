@@ -1,48 +1,89 @@
-import { IconButton, Drawer as ChakraDrawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, useDisclosure, Box } from '@chakra-ui/react';
+import {
+  IconButton,
+  Drawer as ChakraDrawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  useDisclosure,
+  Box,
+  Text,
+  VStack,
+  Button,
+} from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import Links from './Links.jsx';
+import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import AvatarWithName from '../AvatarwithName.jsx';
 
 const Drawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const placement = 'right';
-  const { isAuthenticated} = useSelector((state) => state.auth);
+  const { isAuthenticated, name } = useSelector((state) => state.auth);
+
   return (
     <>
       <IconButton
         icon={<HamburgerIcon />}
         aria-label="Open Drawer"
         onClick={onOpen}
-        
+        variant="ghost"
+        borderRadius="16px"
+        size="md"
       />
-      <ChakraDrawer placement={placement} onClose={onClose} isOpen={isOpen}>
+      <ChakraDrawer placement="right" onClose={onClose} isOpen={isOpen} size="full">
         <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px" display="flex" justifyContent="space-between" alignItems="center">
-            <span>Menu</span>
+        <DrawerContent maxW="100vw" bg="linear-gradient(180deg, #f8fbff 0%, #ffffff 100%)">
+          <DrawerHeader borderBottomWidth="1px" display="flex" justifyContent="space-between" alignItems="center" py={5}>
+            <Text fontFamily="Poppins" fontWeight="800" fontSize="xl">Menu</Text>
             <IconButton
               icon={<CloseIcon />}
               aria-label="Close Drawer"
               onClick={onClose}
               variant="ghost"
-              size={"sm"}
+              size="sm"
             />
           </DrawerHeader>
-          <DrawerBody>
-            <Box my={4}>
-                <Links title='About' url='/about' />
-            </Box>
-            <Box my={4}>
-                <Links title='Services' url='/services' />
-            </Box>
-            {!isAuthenticated ? <Box my={4}>
-                <Links title='Login' url='/auth/login' />
-            </Box> : <Box my={4}>
-              <Links title='User DashBoard' url='/dashboard' />
-            </Box>}
-            <Box my={4}>
-                <Links title='Book Appoinment' url='/book' />
-            </Box>
+          <DrawerBody px={6} py={8}>
+            <VStack align="stretch" spacing={5}>
+              {isAuthenticated && (
+                <Box
+                  bg="white"
+                  borderRadius="24px"
+                  px={5}
+                  py={5}
+                  borderWidth="1px"
+                  borderColor="blackAlpha.100"
+                  boxShadow="0 14px 36px rgba(15, 23, 42, 0.05)"
+                >
+                  <AvatarWithName name={name} />
+                </Box>
+              )}
+
+              {[
+                { title: 'About', url: '/about' },
+                { title: 'Services', url: '/services' },
+                { title: isAuthenticated ? 'Dashboard' : 'Login', url: isAuthenticated ? '/dashboard' : '/auth/login' },
+                { title: 'Book Appointment', url: '/book' },
+              ].map((item) => (
+                <Button
+                  key={item.url}
+                  as={RouterLink}
+                  to={item.url}
+                  onClick={onClose}
+                  justifyContent="flex-start"
+                  variant="ghost"
+                  borderRadius="18px"
+                  height="56px"
+                  fontFamily="Poppins"
+                  fontSize="lg"
+                  fontWeight="600"
+                  color="gray.800"
+                  _hover={{ bg: "blue.50", color: "blue.600" }}
+                >
+                  {item.title}
+                </Button>
+              ))}
+            </VStack>
           </DrawerBody>
         </DrawerContent>
       </ChakraDrawer>

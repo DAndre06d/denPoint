@@ -7,35 +7,38 @@ const Links = ({ url, title }) => {
   const isActive = location.pathname === url;
 
   return (
-    <Box position="relative" _hover={{ '& .underline': { width: '100%' } }}>
+    <Box>
       <Link
-        href="#"
-        _hover={{ textDecoration: 'none', color: 'blue.500' }}
-        display="inline-block"
         as={RouterLink}
         to={url}
-        fontSize={"2xl"}
-        color={isActive ? "blue.500" : "inherit"}
+        display="inline-flex"
+        alignItems="center"
+        justifyContent="center"
+        px={{ md: 4, lg: 5 }}
+        py={2}
+        borderRadius="999px"
+        fontFamily="Poppins"
+        fontSize={{ md: "md", lg: "lg" }}
+        fontWeight={isActive ? "700" : "600"}
+        color={isActive ? "blue.600" : "gray.700"}
+        bg={isActive ? "blue.50" : "transparent"}
+        whiteSpace="nowrap"
+        _hover={{
+          textDecoration: 'none',
+          color: 'blue.600',
+          bg: isActive ? "blue.50" : "blackAlpha.50",
+        }}
+        transition="all 0.2s ease"
       >
         {title}
       </Link>
-      <Box
-        className="underline"
-        position="absolute"
-        bottom="-10px"
-        left="0"
-        width={isActive ? "100%" : "0"}
-        height="2px"
-        backgroundColor="blue.500"
-        transition="width 0.3s ease"
-      />
     </Box>
   );
 };
 
 Links.propTypes = {
-  url: PropTypes.string.isRequired, // URL must be a string and is required
-  title: PropTypes.string.isRequired // Title must be a string and is required
+  url: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default Links;

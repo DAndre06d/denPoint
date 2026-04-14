@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, VStack, Spinner } from '@chakra-ui/react';
+import { Box, Button, VStack, Spinner, Text } from '@chakra-ui/react';
 import { TIMESLOTS } from '../utils/constants.js';
 import axios from 'axios';
 import { formatDateForDB } from '../utils/textUtils.js';
@@ -16,9 +16,8 @@ const TimeSlotSelector = ({ denId, selectedDate, onChange }) => {
       setIsLoading(true);
       try {
         const formattedDate = formatDateForDB(selectedDate);
-        const response = await axios.get(`http://localhost:3000/dentist/getDentistAvailableTime?denId=${denId}&date=${formattedDate}`,{withCredentials:true});
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/dentist/getDentistAvailableTime?denId=${denId}&date=${formattedDate}`,{withCredentials:true});
         const data = response.data;
-        console.log(data)
         // Extract time slots from API response
         const slots = data.map(item => item.time);
         setUnavailableSlots(slots);
@@ -38,7 +37,7 @@ const TimeSlotSelector = ({ denId, selectedDate, onChange }) => {
   };
 
   return (
-    <Box p={4}>
+    <Box px={{ base: 0, md: 4 }} py={4} width="100%">
       <VStack spacing={4}>
         {isLoading ? (
           <Spinner size="lg" />
@@ -57,9 +56,9 @@ const TimeSlotSelector = ({ denId, selectedDate, onChange }) => {
           ))
         )}
         {selectedSlot && (
-          <Box mt={4}>
-            <h2>Selected Slot:</h2>
-            <p>{selectedSlot.start} - {selectedSlot.end}</p>
+          <Box mt={4} width="100%" textAlign="left">
+            <Text fontWeight="bold">Selected Slot:</Text>
+            <Text>{selectedSlot.start} - {selectedSlot.end}</Text>
           </Box>
         )}
       </VStack>

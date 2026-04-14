@@ -1,52 +1,51 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
+const DateInput = forwardRef(({ value, onClick }, ref) => (
+  <InputGroup size="lg" width="100%">
+    <Input
+      ref={ref}
+      onClick={onClick}
+      value={value || ''}
+      readOnly
+      cursor="pointer"
+      bg="white"
+      borderWidth="1px"
+      borderColor="gray.200"
+      borderRadius="16px"
+      height="64px"
+      fontSize={{ base: "lg", md: "xl" }}
+      fontWeight="medium"
+      px={5}
+      _hover={{ borderColor: "blue.300" }}
+      _focusVisible={{
+        borderColor: "blue.400",
+        boxShadow: "0 0 0 1px #4299E1",
+      }}
+    />
+    <InputRightElement width="56px" height="64px" pointerEvents="none">
+      <Box as="img" src="/images/calendar.svg" alt="Calendar Icon" width="24px" height="24px" />
+    </InputRightElement>
+  </InputGroup>
+));
+
+DateInput.displayName = "DateInput";
+
 const DatePickerComponent = ({ value, onChange }) => {
   return (
-
-      <Box 
-        border="2px" 
-        borderColor="black" 
-        borderRadius="2px" 
-        display="flex" 
-        justifyContent="center" 
-        alignItems="center" 
-        mb={{ base: 5, lg: 0 }}
-        mt={3}
-        width={"250px"}
-      >
-        <DatePicker 
-          minDate={new Date()} 
-          selected={value} 
-          onChange={onChange} 
-          className='custom-date-picker' 
-          customInput={
-            <div style={{ position: 'relative' }}>
-              <input
-                className="custom-date-picker-input"
-                value={value ? value.toLocaleDateString() : ''}
-                readOnly
-              />
-              <img
-                src="images/calendar.svg"
-                className="calendar-icon"
-                alt="Calendar Icon"
-                style={{
-                  position: 'absolute',
-                  right: '20px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  width: '20px',
-                  height: 'auto'
-                }}
-              />
-            </div>
-          } 
-        />
-      </Box>
+    <Box mt={3} width="100%">
+      <DatePicker
+        minDate={new Date()}
+        selected={value}
+        onChange={onChange}
+        dateFormat="M/d/yyyy"
+        popperPlacement="bottom-start"
+        customInput={<DateInput />}
+      />
+    </Box>
   );
 };
 

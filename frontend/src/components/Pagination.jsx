@@ -15,7 +15,7 @@ const Pagination = ({ totalItems, itemsPerPageOptions, onPageChange, onPageSizeC
         // Notify parent component of page or page size change
         onPageChange(currentPage);
         onPageSizeChange(pageSize);
-    }, [currentPage, pageSize, onPageChange, onPageSizeChange]);
+    }, [currentPage, pageSize]);
 
     const handlePageSizeChange = (e) => {
         const newSize = parseInt(e.target.value, 10);
@@ -36,35 +36,50 @@ const Pagination = ({ totalItems, itemsPerPageOptions, onPageChange, onPageSizeC
     };
 
     return (
-        <Box display="flex" justifyContent={{ base: "space-between", md: "flex-end" }} my={5} pr={{ base: 0, xl: 3 }}>
-            <Box width={"40%"} display={"flex"} flexDirection={{ base: "column", lg: "row" }} gap={{ base: 4, lg: 0 }} justifyContent={"space-between"}>
+        <Box
+            display="flex"
+            justifyContent={{ base: "stretch", md: "space-between" }}
+            alignItems={{ base: "stretch", md: "center" }}
+            my={6}
+            px={{ base: 0, md: 1 }}
+            py={4}
+            borderTop="1px solid"
+            borderColor="gray.100"
+        >
+            <Box
+                width={{ base: "100%", lg: "auto" }}
+                display={"flex"}
+                flexDirection={{ base: "column", lg: "row" }}
+                gap={{ base: 4, lg: 6 }}
+                justifyContent={"space-between"}
+                alignItems={{ base: "stretch", lg: "center" }}
+            >
                 <Select
                     size={"sm"}
                     value={pageSize}
                     onChange={handlePageSizeChange}
-                    width={"130px"}
+                    width={{ base: "100%", sm: "160px" }}
                     placeholder='Rows per page'
-                    ml={2}
                 >
                     {itemsPerPageOptions.map(option => (
                         <option key={option} value={option}>{option}</option>
                     ))}
                 </Select>
-                <Text ml={{ base: 4, lg: 0 }}>Current Page: {currentPage}</Text>
-                <Box ml={2} display={"flex"} flexDirection={{ base: "column", sm: "row" }}>
+                <Text color="gray.600">Current Page: {currentPage}</Text>
+                <Box display={"flex"} flexDirection={{ base: "column", sm: "row" }} gap={{ base: 2, sm: 4 }}>
                     <Button
                         size="sm"
                         onClick={handlePrevPage}
                         isDisabled={currentPage === 1}
+                        variant="outline"
                     >
                         Prev {'<'}
                     </Button>
                     <Button
-                        ml={{ base: 0, md: 5 }}
-                        my={{ base: 2, sm: 0 }}
                         onClick={handleNextPage}
                         size="sm"
                         isDisabled={currentPage === totalPages}
+                        colorScheme="blue"
                     >
                         Next {'>'}
                     </Button>

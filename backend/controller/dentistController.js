@@ -14,7 +14,7 @@ const dentistController = {
             return res.status(404).json({message: "Invalid query"})
         }
         db.query(query, params, (err, data)=>{
-            if(err) return res.status(err).json({message: err.message})
+            if(err) return res.status(500).json({message: err.message})
             res.json(data)
         })
     },
@@ -30,9 +30,9 @@ const dentistController = {
                 a.appointment_date,
                 a.time
             FROM
-                dentist.dentists d
+                dentists d
             LEFT JOIN
-                dentist.appointments a
+                appointments a
             ON
                 d.id = a.dentist_id
             WHERE
@@ -44,7 +44,7 @@ const dentistController = {
             params.push(date)
         }
         db.query(query, params, (err, data)=>{
-            if(err) return res.status(err).json({message: err.message})
+            if(err) return res.status(500).json({message: err.message})
             res.status(200).json(data)
         })
     }

@@ -1,4 +1,4 @@
-import { Box, Button, Text, Select, Input, Spinner, useToast } from '@chakra-ui/react';
+import { Box, Button, Text, Select, Input, Spinner, useToast, VStack } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import DatePickerComponent from '../DatePickerComponent.jsx';
 import { SERVICES } from '../../utils/constants.js';
@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { formatDateForDB } from '../../utils/textUtils.js';
 
-const BookingForm = ({ mode, initialDate, initialService, initialDoctor, initialTime, initialConcern,appointId, toggleModal }) => {
+const BookingForm = ({ mode, initialDate, initialService, initialDoctor, initialTime, initialConcern,appointId, toggleModal, onSuccess }) => {
     const { userId, } = useSelector((state) => state.auth);
     const [selectedDate, setSelectedDate] = useState(initialDate || new Date());
     const [selectedService, setSelectedService] = useState(initialService || '');
@@ -32,9 +32,10 @@ const BookingForm = ({ mode, initialDate, initialService, initialDoctor, initial
             const fetchData=async()=>{
                 try{
                     const res = await axios.get(`${import.meta.env.VITE_API_URL}/dentist/getDentists?specialty=${selectedService}`,{withCredentials: true})
-                setDoctorList(res.data)
-                setIsLoading(false)
+                    setDoctorList(res.data)
+                    setIsLoading(false)
                 }catch(e){
+                    setIsLoading(false)
                     return toast({
                         title: "Error",
                         description: e.response.data.message,
@@ -72,7 +73,6 @@ const BookingForm = ({ mode, initialDate, initialService, initialDoctor, initial
         setConcern(e.target.value);
     };
     const handleSubmit = async () => {
-        console.log(selectedTime, selectedDoctor, selectedService, concern, selectedTime)
         if (!selectedDate || !selectedDoctor || !selectedService || !concern || !selectedTime) {
             return toast({
                 title: "Error",
@@ -115,6 +115,9 @@ const BookingForm = ({ mode, initialDate, initialService, initialDoctor, initial
     
         try {
             const resSubmit = await axios.post(apiEndpoint, requestBody, { withCredentials: true })
+            if (onSuccess) {
+                await onSuccess();
+            }
             
             toast({
                 title: "Success",
@@ -127,6 +130,7 @@ const BookingForm = ({ mode, initialDate, initialService, initialDoctor, initial
         } catch (e) {
             toast({
                 title: "Error",
+                position: "top-right",
                 description: e.response.data.message || "An unknown error occurred",
                 status: "error",
                 duration: 5000,
@@ -145,44 +149,91 @@ const BookingForm = ({ mode, initialDate, initialService, initialDoctor, initial
         }
     };;
     return (
-        <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} fontFamily={"Poppins"}>
-            <Box>
+        <Box
+            width="100%"
+            maxW="720px"
+            bg="white"
+            borderWidth="1px"
+            borderColor="gray.100"
+            borderRadius="28px"
+            boxShadow="0 24px 60px rgba(15, 23, 42, 0.08)"
+            fontFamily={"Poppins"}
+            px={{ base: 5, md: 10 }}
+            py={{ base: 6, md: 10 }}
+            mb={10}
+        >
+            <VStack spacing={{ base: 6, md: 8 }} align="stretch">
                 <Box>
-                    <Text as={"b"} mb={5}>Select A Date:</Text>
+                    <Text as={"b"} fontSize={{ base: "lg", md: "xl" }}>Select A Date</Text>
                     <DatePickerComponent onChange={handleDateChange} value={selectedDate} />
                 </Box>
-                <Box mt={10}>
-                    <Text as={"b"} mb={5}>Type of service:</Text>
-                    <Select placeholder={"Select Service"} mt={2} value={selectedService} onChange={handleServiceChange}>
+                <Box>
+                    <Text as={"b"} fontSize={{ base: "lg", md: "xl" }}>Type of service</Text>
+                    <Select
+                        placeholder={"Select Service"}
+                        mt={3}
+                        size="lg"
+                        height="64px"
+                        borderRadius="16px"
+                        borderColor="gray.200"
+                        value={selectedService}
+                        onChange={handleServiceChange}
+                    >
                         {SERVICES.map((service) => (
                             <option key={service.name} value={service.value}>{service.name}</option>
                         ))}
                     </Select>
                 </Box>
-            </Box>
-            <Box>
-                <Box mt={5}>
-                    <Text as={"b"} mb={5}>Select a Doctor</Text>
-                    {isLoading ? <Box><Spinner /> </Box> : <Select placeholder={"Select Doctor"} mt={2} value={selectedDoctor} onChange={handleDoctorChange} isDisabled={!selectedService || isLoading}>
+                <Box>
+                    <Text as={"b"} fontSize={{ base: "lg", md: "xl" }}>Select a Doctor</Text>
+                    {isLoading ? <Box mt={3}><Spinner /> </Box> : <Select
+                        placeholder={"Select Doctor"}
+                        mt={3}
+                        size="lg"
+                        height="64px"
+                        borderRadius="16px"
+                        borderColor="gray.200"
+                        value={selectedDoctor}
+                        onChange={handleDoctorChange}
+                        isDisabled={!selectedService || isLoading}
+                    >
                         {docotorList.map((doctor) => (
                             <option key={doctor.id} value={doctor.id}>{doctor.full_name}</option>
                         ))}
                     </Select>}
                 </Box>
-                <Box mt={5}>
-                    <Text as={"b"} mb={5}>Select a Time Slot:</Text>
-                    {!selectedDoctor || !selectedService ? <Text> Please select a doctor first.</Text> :<TimePickerComponent onChange={handleTimeChange} value={selectedTime} denId={selectedDoctor} selectedDate={selectedDate} />}
+                <Box>
+                    <Text as={"b"} fontSize={{ base: "lg", md: "xl" }}>Select a Time Slot</Text>
+                    {!selectedDoctor || !selectedService ? (
+                        <Text mt={3} color="gray.600">Please select a doctor first.</Text>
+                    ) : (
+                        <TimePickerComponent onChange={handleTimeChange} value={selectedTime} denId={selectedDoctor} selectedDate={selectedDate} />
+                    )}
                 </Box>
-                <Box mt={5}>
-                    <Text as={"b"} mb={5}>Concern:</Text>
-                    <Input value={concern} onChange={handleConcernChange} />
+                <Box>
+                    <Text as={"b"} fontSize={{ base: "lg", md: "xl" }}>Concern</Text>
+                    <Input
+                        mt={3}
+                        height="64px"
+                        borderRadius="16px"
+                        borderColor="gray.200"
+                        value={concern}
+                        onChange={handleConcernChange}
+                    />
                 </Box>
-                <Box display={"flex"} justifyContent={"flex-end"} width={"100%"} my={5}>
-                    <Button onClick={handleSubmit} colorScheme="blue" isDisabled={isLoading}>{isLoading ? <Spinner /> : "Submit"}</Button>
+                <Box display={"flex"} justifyContent={{ base: "stretch", md: "flex-end" }} width={"100%"} pt={2}>
+                    <Button
+                        width={{ base: "100%", md: "220px" }}
+                        height="60px"
+                        borderRadius="18px"
+                        onClick={handleSubmit}
+                        colorScheme="blue"
+                        isDisabled={isLoading}
+                    >
+                        {isLoading ? <Spinner /> : "Submit"}
+                    </Button>
                 </Box>  
-            </Box>
-
-                
+            </VStack>
         </Box>
     );
 };
@@ -194,6 +245,8 @@ BookingForm.propTypes = {
     initialDoctor: PropTypes.string,
     initialTime: PropTypes.string,
     initialConcern: PropTypes.string,
+    toggleModal: PropTypes.func,
+    onSuccess: PropTypes.func,
 };
 
 export default BookingForm;

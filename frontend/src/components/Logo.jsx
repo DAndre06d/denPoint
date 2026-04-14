@@ -10,6 +10,8 @@ const Logo = ({ size }) => {
         src="/images/DenPoint.png"
         width={size.width}
         height={size.height}
+        objectFit="contain"
+        display="block"
       />
       </Link>
     </Box>
@@ -18,8 +20,8 @@ const Logo = ({ size }) => {
 
 Logo.propTypes = {
   size: PropTypes.shape({
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   }).isRequired,
 };
 

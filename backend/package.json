@@ -5,7 +5,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "database": "node scripts/setupDatabase.js --migrate",
+    "seed": "node scripts/setupDatabase.js --seed",
+    "db:migrate": "node scripts/setupDatabase.js --migrate",
+    "db:seed": "node scripts/setupDatabase.js --seed",
+    "db:setup": "node scripts/setupDatabase.js --setup"
   },
   "keywords": [],
   "author": "",

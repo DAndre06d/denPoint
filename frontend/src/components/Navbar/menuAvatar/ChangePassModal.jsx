@@ -73,6 +73,7 @@ const ChangePassModal = ({ modalState }) => {
     if (confirmPassword !== newPassword) {
       toast({
         title: 'Passwords do not match',
+        position: 'top-right',
         description: 'Please confirm your new password correctly.',
         status: 'error',
         duration: 5000,
@@ -88,6 +89,7 @@ const ChangePassModal = ({ modalState }) => {
       }, { withCredentials: true });
       toast({
         title: 'Password Changed',
+        position: 'top-right',
         description: 'Your password has been successfully changed.',
         status: 'success',
         duration: 5000,
@@ -96,6 +98,7 @@ const ChangePassModal = ({ modalState }) => {
     } catch (e) {
       toast({
         title: 'Error',
+        position: 'top-right',
         description: e.response?.data?.message || 'An unexpected error occurred.',
         status: 'error',
         duration: 5000,

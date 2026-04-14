@@ -146,7 +146,23 @@ The application relies on environment variables defined in a `.env` file. Essent
     DB_DATABASE=your_db_name
     ```
 
-5. **Start the server:**
+5. **Run the backend database setup:**
+
+    ```bash
+    cd backend
+    npm run db:setup
+    ```
+
+    This creates the `denPoint` database if it does not exist yet, then applies the schema from [backend/database/migrations/001_init_schema.sql](/Users/darellandre/Documents/Code/personal/js/denPoint/backend/database/migrations/001_init_schema.sql:1) and the starter data from [backend/database/seeds/001_seed_data.sql](/Users/darellandre/Documents/Code/personal/js/denPoint/backend/database/seeds/001_seed_data.sql:1).
+
+    Seeded demo users:
+
+    - `patient@denpoint.local`
+    - `admin@denpoint.local`
+
+    Both use the password `password123`.
+
+6. **Start the server:**
 
     ```bash
     npm start
@@ -223,6 +239,4 @@ https://drive.google.com/file/d/1cVMMM2fYWXv0KWHo3c7Y84KatrlhS_oX/view?usp=shari
 
 ### Link for the deployed frontend (note this is still not connected to a server):
 https://den-point.vercel.app/
-
-
 
