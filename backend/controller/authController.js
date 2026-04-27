@@ -7,6 +7,8 @@ import {
   updatePassword,
 } from "../utils.js/authUtils.js";
 const saltRounds = 10;
+const isProduction = process.env.NODE_ENV === "production";
+
 const authController = {
   register: (req, res) => {
     const { email, password, fName, lName, phoneNumber } = req.body;
@@ -83,9 +85,10 @@ const authController = {
         );
         res.cookie("access_token", accessToken, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "Strict",
+          secure: isProduction,
+          sameSite: isProduction ? "None" : "Lax",
           maxAge: 3600000,
+          path: "/",
         });
         return res.status(200).json({
           message: "Login successful",
