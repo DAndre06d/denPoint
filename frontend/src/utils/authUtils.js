@@ -5,7 +5,11 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post('http://localhost:3000/auth/login', credentials, { withCredentials: true });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        credentials,
+        { withCredentials: true }
+      );
 
       if (response.status !== 200) {
         throw new Error(response.data.message || 'Failed to login');

@@ -39,6 +39,7 @@ const schedController = {
         }
     
         let { baseQuery, countQuery, params } = getAppointmentsQueries(userId, denId);
+        const countParams = [...params];
     
         if (!denId) {
             const pagination = getPagination(page, limit);
@@ -48,7 +49,7 @@ const schedController = {
     
         try {
             // Fetch total count
-            const totalCount = await fetchTotalCount(countQuery, params);
+            const totalCount = await fetchTotalCount(countQuery, countParams);
     
             // Fetch paginated data
             let data = await fetchPaginatedData(baseQuery, params);

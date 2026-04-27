@@ -42,13 +42,16 @@ const UserDashboard = () => {
       setAppointments({ data: transformedData, totalCount: resAppData.data.total });
     } catch (e) {
       const errorMessage = e.response?.data?.message || e.message;
-      toast({
-        title: "Error",
-        description: errorMessage,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
+      if (!toast.isActive("appointments-fetch-error")) {
+        toast({
+          id: "appointments-fetch-error",
+          title: "Error",
+          description: errorMessage,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     }
   }, [pageData.page, pageData.pageSize, toast, userId]);
 

@@ -1,11 +1,12 @@
-import db from "../config/dbConn";
+import db from "../config/dbConn.js";
 const fetchDentistNames = async (dentistIds) => {
     if (dentistIds.length === 0) return {};
     try {
-        const query = 'SELECT id, name FROM dentists WHERE id IN (?)';
-        const [rows] = await db.execute(query, [dentistIds]);
+        const placeholders = dentistIds.map(() => "?").join(", ");
+        const query = `SELECT id, full_name FROM dentists WHERE id IN (${placeholders})`;
+        const [rows] = await db.execute(query, dentistIds);
         const dentistMap = rows.reduce((acc, row) => {
-            acc[row.id] = row.name;
+            acc[row.id] = row.full_name;
             return acc;
         }, {});
         return dentistMap;
@@ -14,3 +15,5 @@ const fetchDentistNames = async (dentistIds) => {
         throw new Error('Failed to fetch dentist names');
     }
 };
+
+export default fetchDentistNames;

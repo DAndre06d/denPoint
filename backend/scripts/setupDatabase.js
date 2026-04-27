@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import mysql from "mysql2/promise";
+import { Client } from "pg";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -9,28 +9,26 @@ const mode = process.argv[2];
 const backendDir = path.resolve(process.cwd());
 const migrationsDir = path.join(backendDir, "database", "migrations");
 const seedsDir = path.join(backendDir, "database", "seeds");
-
 const validModes = new Set(["--migrate", "--seed", "--setup"]);
 
 if (!validModes.has(mode)) {
-  console.error(
-    "Usage: node scripts/setupDatabase.js --migrate|--seed|--setup",
-  );
+  console.error("Usage: node scripts/setupDatabase.js --migrate|--seed|--setup");
   process.exit(1);
 }
 
-const databaseName = process.env.DB_DATABASE;
+const connectionString = process.env.DATABASE_URL;
 
-if (!databaseName) {
-  console.error("DB_DATABASE is required in backend/.env");
+if (!connectionString) {
+  console.error("DATABASE_URL is required in backend/.env for Postgres setup.");
   process.exit(1);
 }
 
-const connection = await mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  multipleStatements: true,
+const client = new Client({
+  connectionString,
+  ssl:
+    connectionString.includes("sslmode=require") || process.env.PG_SSL === "true"
+      ? { rejectUnauthorized: false }
+      : false,
 });
 
 const readSqlFiles = async (dirPath) => {
@@ -45,24 +43,23 @@ const readSqlFiles = async (dirPath) => {
   );
 };
 
-const runFiles = async (dirPath, label) => {
+const runFiles = async (dirPath) => {
   const files = await readSqlFiles(dirPath);
 
   for (const file of files) {
-    await connection.query(file.sql);
+    await client.query(file.sql);
   }
 };
 
 try {
-  await connection.query(`CREATE DATABASE IF NOT EXISTS \`${databaseName}\``);
-  await connection.changeUser({ database: databaseName });
+  await client.connect();
 
   if (mode === "--migrate" || mode === "--setup") {
-    await runFiles(migrationsDir, "migration");
+    await runFiles(migrationsDir);
   }
 
   if (mode === "--seed" || mode === "--setup") {
-    await runFiles(seedsDir, "seed");
+    await runFiles(seedsDir);
   }
 
   console.log("Database setup completed successfully.");
@@ -70,5 +67,5 @@ try {
   console.error("Database setup failed:", error.message);
   process.exitCode = 1;
 } finally {
-  await connection.end();
+  await client.end();
 }

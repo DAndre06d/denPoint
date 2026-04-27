@@ -16,36 +16,38 @@ VALUES
     '09179876543',
     'admin'
   )
-ON DUPLICATE KEY UPDATE
-  firstname = VALUES(firstname),
-  lastname = VALUES(lastname),
-  phone_number = VALUES(phone_number),
-  role = VALUES(role);
+ON CONFLICT (email) DO UPDATE SET
+  firstname = EXCLUDED.firstname,
+  lastname = EXCLUDED.lastname,
+  phone_number = EXCLUDED.phone_number,
+  role = EXCLUDED.role;
 
-SET @maria_keep_id := (
-  SELECT MIN(id)
+WITH maria_keep AS (
+  SELECT MIN(id) AS id
   FROM dentists
   WHERE full_name = 'Dr. Maria Santos'
     AND specialty = 'genDentistry'
-);
-
-UPDATE appointments
-SET dentist_id = @maria_keep_id
-WHERE dentist_id IN (
+),
+duplicate_maria AS (
   SELECT id
-  FROM (
-    SELECT id
-    FROM dentists
-    WHERE full_name = 'Dr. Maria Santos'
-      AND specialty = 'genDentistry'
-      AND id <> @maria_keep_id
-  ) AS duplicate_dentists
-);
+  FROM dentists
+  WHERE full_name = 'Dr. Maria Santos'
+    AND specialty = 'genDentistry'
+    AND id <> (SELECT id FROM maria_keep)
+)
+UPDATE appointments
+SET dentist_id = (SELECT id FROM maria_keep)
+WHERE dentist_id IN (SELECT id FROM duplicate_maria);
 
 DELETE FROM dentists
 WHERE full_name = 'Dr. Maria Santos'
   AND specialty = 'genDentistry'
-  AND id <> @maria_keep_id;
+  AND id <> (
+    SELECT COALESCE(MIN(id), -1)
+    FROM dentists
+    WHERE full_name = 'Dr. Maria Santos'
+      AND specialty = 'genDentistry'
+  );
 
 INSERT INTO dentists (full_name, specialty, time)
 VALUES
@@ -54,16 +56,16 @@ VALUES
   ('Dr. Andrea Cruz', 'OSID', '10:00-11:30'),
   ('Dr. Miguel Navarro', 'OCA', '16:30-18:00'),
   ('Dr. Sophia Lim', 'prosthodontics', '13:00-14:30')
-ON DUPLICATE KEY UPDATE
-  full_name = VALUES(full_name),
-  specialty = VALUES(specialty),
-  time = VALUES(time);
+ON CONFLICT (full_name, specialty, time) DO UPDATE SET
+  full_name = EXCLUDED.full_name,
+  specialty = EXCLUDED.specialty,
+  time = EXCLUDED.time;
 
-INSERT INTO appointments (user_id, dentist_id, appointment_date, status, concern, time, typeOfService)
+INSERT INTO appointments (user_id, dentist_id, appointment_date, status, concern, time, typeofservice)
 SELECT
   u.id,
   d.id,
-  DATE_ADD(CURDATE(), INTERVAL 1 DAY),
+  CURRENT_DATE + INTERVAL '1 day',
   'scheduled',
   'Initial consultation',
   '10:00-11:30',
@@ -76,6 +78,6 @@ WHERE u.email = 'patient@denpoint.local'
     FROM appointments a
     WHERE a.user_id = u.id
       AND a.dentist_id = d.id
-      AND a.appointment_date = DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+      AND a.appointment_date = CURRENT_DATE + INTERVAL '1 day'
       AND a.time = '10:00-11:30'
   );

@@ -77,13 +77,13 @@ const authController = {
             .status(401)
             .json({ message: "Incorrect username or password." });
         const accessToken = jwt.sign(
-          { userId: user.id, email: user.email, role: user.email },
+          { userId: user.id, email: user.email, role: user.role },
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: "1h" },
         );
         res.cookie("access_token", accessToken, {
           httpOnly: true,
-          secure: true,
+          secure: process.env.NODE_ENV === "production",
           sameSite: "Strict",
           maxAge: 3600000,
         });
@@ -91,7 +91,7 @@ const authController = {
           message: "Login successful",
           user: {
             id: user.id,
-            username: user.fName,
+            username: user.firstname,
             email: user.email,
             role: user.role,
             name: user.firstname,
